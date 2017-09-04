@@ -11,7 +11,7 @@ This file creates a graph with a degree distribution that follows a power law.
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
-import math
+import collections
 
 #%%
 power_law_graph = expl_graph = nx.barabasi_albert_graph(500, 5, seed=123)
@@ -49,17 +49,20 @@ degree_sequence = sorted(nx.degree(power_law_graph).values(), reverse=True)
 #%%
 
 degree_sequence=sorted(nx.degree(power_law_graph).values(),reverse=True) # degree sequence
+degreeCount = collections.Counter(degree_sequence)
+deg, cnt = zip(*degreeCount.items())
 #print "Degree sequence", degree_sequence
 dmax=max(degree_sequence)
 
 fig, axes = plt.subplots(2, 1, figsize=(7, 7))
 hist, bins = np.histogram(degree_sequence)
 x_axis_max = max(degree_sequence) + 2
-#y_axis_max = math.ceil(1.1 * max(cnt) + 2)
+# y_axis_max = math.ceil(1.1 * max(cnt) + 2)
 axes[0].set_title("Degree distribution", fontsize=14, ha='center', loc='center')
 axes[0].bar(deg, cnt, color="#3F5D7D", alpha=1.0, edgecolor = "#3F5D7D")
+
 axes[0].set_xlim(4, x_axis_max)
-axes[0].set_ylim(0, y_axis_max)
+# axes[0].set_ylim(0, y_axis_max)
 
 axes[1].loglog(degree_sequence,'b-',marker='.', color="#3F5D7D")
 axes[1].set_title("Cumulative degree dist", fontsize=14, ha='center', loc='center')

@@ -6,8 +6,8 @@ Created on Thu Aug  3 16:14:41 2017
 @author: graebnerc
 
 This file contains the code for the figure illutrating the different 
-graphs resulting from the ER model of the ER model and a plot for the Poisson 
-distribution.
+graphs resulting from the ER model of the ER model and a plot for the degree
+distributions, which is Poisson.
 """
 
 #%% Imports
@@ -54,7 +54,7 @@ for col in range(graphs_per_row):
                          ax=axes[row, col])
         axes[row, col].set_facecolor('white')
         axes[row, col].tick_params(
-                axis='both',         # changes apply to both axis
+                axis='both',       # changes apply to both axis
                 which='both',      # both major and minor ticks are affected
                 bottom='off',      # ticks along the bottom edge are off
                 top='off',         # ticks along the top edge are off
@@ -99,23 +99,9 @@ plt.rc('font', family='serif')
 fig, ax = plt.subplots(figsize=(7, 4.7))
 for i in range(len(results)):
     ax.plot(k, results[i], marker='.',label='c=%s' % (str(lmbda[i])) )
-ax.set_title('Degree distribution of the ER Modell')
+ax.set_title('Degree distribution of the ER model')
 ax.set_xlabel(r'k')
 ax.set_ylabel(r'$\mathbb{P}(\delta(v_i)=k)$')
 ax.legend(loc='upper right')
 plt.savefig("output/ER_degree-dist.pdf")
-
-#%% Comparison of actual degree distribution and analytical baseline
-plt.clf()
-fig, axes = plt.subplots(figsize=(7, 4.7))
-graph_names = list(graph_names.reshape(1,4))[0]
-for g in range(len(graph_names)):
-    deg_dist = graphs[graph_names[g]].degree()#.values()
-    plt.scatter(list(deg_dist.keys()), list(deg_dist.values()))
-
-    ax.plot(k, results[i],marker='.',label='c=%s' % (str(lmbda[i])) )
-ax.set_title('Degree distribution of ER Graphs - low n')
-ax.set_xlabel(r'k')
-ax.set_ylabel(r'$\mathbb{P}(\delta(v_i)=k)$')
-#ax.legend(loc='upper right')
-plt.savefig("output/ER_degree-dist-comp.pdf")    
+  
